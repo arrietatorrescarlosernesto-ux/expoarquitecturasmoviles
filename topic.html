@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema - Arquitecturas Móviles</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Chaos<span style="color:var(--accent-blue)">Techno</span></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="about.html">Acerca de</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Arquitecturas móviles</h3>
+            <ul class="topic-list" id="sidebar-list">
+                <!-- Javascript will populate this -->
+            </ul>
+        </aside>
+        
+        <main class="content">
+            <div id="content-area">
+                <div class="loading-spinner">Cargando contenido...</div>
+            </div>
+            
+            <div class="navigation-buttons" id="nav-buttons" style="display:none;">
+                <a href="#" class="nav-btn prev" id="btn-prev">← Anterior</a>
+                <a href="#" class="nav-btn next" id="btn-next">Siguiente →</a>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>2025 Exposición de arquitecturas móviles, Cecyt 3 Centro de Estudios Científicos y Tecnológicos N° 3 “Estanislao Ramírez Ruiz” IPN</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

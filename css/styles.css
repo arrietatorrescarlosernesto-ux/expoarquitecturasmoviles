@@ -1,0 +1,666 @@
+:root {
+    --bg-color: #050505;
+    --card-bg: #111111;
+    --text-main: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-blue: #0000ff;
+    --accent-purple: #800080;
+    --gradient-main: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
+/* Header & Nav */
+header {
+    background: rgba(10, 10, 10, 0.95);
+    border-bottom: 2px solid;
+    border-image: var(--gradient-main) 1;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.2);
+    animation: slideDown 0.5s ease-out;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.nav-links a:hover {
+    color: #8a2be2;
+    text-shadow: 0 0 10px var(--accent-blue);
+}
+
+/* Main Layout */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    gap: 2rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        max-width: 100%;
+        margin-bottom: 2rem;
+        order: 2; /* Move sidebar below content on mobile */
+    }
+    
+    .content {
+        order: 1;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .table-responsive table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Make tables stack on very small screens if needed, or keep scroll */
+    .table-responsive th, .table-responsive td {
+        white-space: normal;
+        min-width: 120px;
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 1;
+    max-width: 300px;
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+    height: fit-content;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.sidebar h3 {
+    margin-bottom: 1rem;
+    color: var(--accent-blue);
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+}
+
+.topic-list {
+    list-style: none;
+}
+
+.topic-list li {
+    margin-bottom: 0.8rem;
+}
+
+.topic-list a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.topic-list a:hover, .topic-list a.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border-left-color: var(--accent-purple);
+    padding-left: 1rem;
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.2);
+}
+
+/* Main Content */
+.content {
+    flex: 3;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('../images/intro.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 400px; /* Increased height */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid #333;
+    box-shadow: 0 0 30px rgba(0, 0, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: zoomIn 1s ease-out;
+    padding: 3rem; /* Added padding */
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 55%;
+    z-index: 2;
+    text-align: left; /* Explicitly left aligned */
+}
+
+.hero-image-container {
+    flex: 1;
+    max-width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.hero-image {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0,255,255,0.3));
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 12px;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3.5rem; /* Larger font */
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #00c6ff, #0072ff, #9d50bb, #6e48aa);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 5s ease infinite;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 2rem;
+    max-width: 90%;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 114, 255, 0.4);
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Card Styling */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #222;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Animation for cards appearing */
+    animation: fadeInCard 0.8s ease-out backwards;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 255, 0.15);
+    border-color: var(--accent-blue);
+}
+
+.card h2 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.card h2::after {
+    content: '';
+    display: block;
+    width: 50%;
+    height: 3px;
+    background: var(--gradient-main);
+    margin-top: 5px;
+    border-radius: 2px;
+}
+
+.subtopic {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid var(--accent-purple);
+    border-radius: 0 8px 8px 0;
+    /* Content animation delay */
+    animation: slideInUp 0.6s ease-out backwards;
+    animation-delay: 0.3s; 
+}
+
+/* Stagger effect for subtopics (up to 10) */
+.subtopics-list .subtopic:nth-child(1) { animation-delay: 0.2s; }
+.subtopics-list .subtopic:nth-child(2) { animation-delay: 0.4s; }
+.subtopics-list .subtopic:nth-child(3) { animation-delay: 0.6s; }
+.subtopics-list .subtopic:nth-child(4) { animation-delay: 0.8s; }
+.subtopics-list .subtopic:nth-child(5) { animation-delay: 1.0s; }
+.subtopics-list .subtopic:nth-child(6) { animation-delay: 1.2s; }
+.subtopics-list .subtopic:nth-child(7) { animation-delay: 1.4s; }
+.subtopics-list .subtopic:nth-child(8) { animation-delay: 1.6s; }
+.subtopics-list .subtopic:nth-child(9) { animation-delay: 1.8s; }
+.subtopics-list .subtopic:nth-child(10) { animation-delay: 2.0s; }
+
+
+.subtopic h3 {
+    color: #bfa3ff;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.subtopic p {
+    margin-bottom: 1rem;
+    color: #ccc;
+    font-size: 1.1rem;
+    text-align: justify;
+}
+
+/* Interactive Elements Styles (New) */
+.objective-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.objective-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.quiz-option {
+    transition: background 0.2s;
+}
+.quiz-option:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+/* Footer */
+footer {
+    background: #000;
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: 4rem;
+    color: #666;
+}
+
+/* RGB / Neon Pulse Animation for headers */
+@keyframes neonPulse {
+    0% { text-shadow: 0 0 5px rgba(0,0,255,0.5); }
+    50% { text-shadow: 0 0 20px rgba(128,0,128,0.8), 0 0 10px rgba(0,0,255,0.5); }
+    100% { text-shadow: 0 0 5px rgba(0,0,255,0.5); }
+}
+
+.glow-text {
+    animation: neonPulse 3s infinite alternate;
+}
+
+/* --- Keyframes Animations --- */
+
+/* 1. Main Content Entry (Fade In + Up) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 2. Sidebar Entry (Slide form Left) */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 3. Header Entry (Slide from Top) */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* 4. Content Cards/Subtopics Entry (Slide In + Fade) */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 5. General Card Fade */
+@keyframes fadeInCard {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 6. Zoom In for Hero */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .sidebar {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 2rem;
+        order: 2;
+    }
+
+    .content {
+        order: 1;
+    }
+    
+    .hero {
+        padding: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .sidebar {
+        flex: 1;
+        max-width: 100%;
+        margin-bottom: 2rem;
+        order: 2; /* Sidebar below content on mobile? User might prefer it above for navigation */
+        /* Let's keep it below or collapsible. Usually below is better for reading content first */
+    }
+    
+    .content {
+        order: 1;
+    }
+
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero {
+        flex-direction: column-reverse; /* Image on top? Or text on top? */
+        /* Original design had text left, image right. */
+        /* On mobile, usually image top, text bottom OR text top, image bottom. */
+        /* Let's do text top (content) and image bottom. */
+        flex-direction: column; 
+        text-align: center;
+        height: auto;
+        min-height: auto;
+        padding: 2rem 1rem;
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-image-container {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .table-responsive table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-btn {
+        display: block;
+        text-align: center;
+    }
+    
+    /* Charts container in Topic 8 */
+    .charts-container {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+}
+
+.nav-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,255,0.4);
+    filter: brightness(1.1);
+}
+
+/* About Page Social Cards */
+.social-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.social-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: transform 0.3s ease, background 0.3s ease;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.social-card .icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.social-card .icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.social-card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.social-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.social-card.whatsapp:hover { border-color: #25D366; box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); }
+.social-card.gmail:hover { border-color: #EA4335; box-shadow: 0 0 20px rgba(234, 67, 53, 0.2); }
+.social-card.discord:hover { border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.2); }
