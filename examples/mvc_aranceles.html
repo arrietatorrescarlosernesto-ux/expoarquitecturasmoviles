@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo MVC - Aranceles</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #00c6ff;
+            margin-bottom: 1.5rem;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Aranceles Globales (Ejemplo MVC)</h1>
+    <div class="chart-wrapper">
+        <canvas id="tariffChart"></canvas>
+    </div>
+    <p class="info">Este gráfico se genera separando Datos (Modelo), Interfaz (Vista) y Lógica (Controlador).</p>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // 1. MODELO (Model)
+    // Responsabilidad: Gestionar los datos puros.
+    // ---------------------------------------------------------
+    const TariffModel = {
+        data: {
+            labels: ["China", "México", "Vietnam", "Unión Europea", "Canadá"],
+            values: [25.0, 5.0, 10.5, 8.0, 4.5] // Porcentajes de arancel promedio
+        },
+        
+        // Método para obtener datos (simula una petición a base de datos)
+        getData: function() {
+            return this.data;
+        }
+    };
+
+    // ---------------------------------------------------------
+    // 2. VISTA (View)
+    // Responsabilidad: Mostrar los datos al usuario (UI).
+    // ---------------------------------------------------------
+    const TariffView = {
+        render: function(data) {
+            const ctx = document.getElementById('tariffChart').getContext('2d');
+            
+            // Si ya existe un gráfico, lo destruimos para evitar superposiciones (buena práctica)
+            if (window.myChart) {
+                window.myChart.destroy();
+            }
+
+            window.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Tasa Arancelaria Promedio (%)',
+                        data: data.values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#333' },
+                            ticks: { color: '#ccc' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#ccc' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#eee' } }
+                    }
+                }
+            });
+        }
+    };
+
+    // ---------------------------------------------------------
+    // 3. CONTROLADOR (Controller)
+    // Responsabilidad: Intermediario. Pide datos al Modelo y se los da a la Vista.
+    // ---------------------------------------------------------
+    const AppController = {
+        init: function() {
+            console.log("Iniciando aplicación MVC...");
+            
+            // 1. Obtener datos del Modelo
+            const data = TariffModel.getData();
+            
+            // 2. Pasarlos a la Vista para renderizar
+            TariffView.render(data);
+        }
+    };
+
+    // Inicializar la aplicación
+    AppController.init();
+
+</script>
+
+</body>
+</html>

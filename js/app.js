@@ -44,7 +44,7 @@ function renderSidebar(topics) {
     const homeLi = document.createElement('li');
     const homeLink = document.createElement('a');
     homeLink.href = 'index.html';
-    homeLink.textContent = '🏠 Inicio';
+    homeLink.textContent = 'Inicio';
     
     // Check if we are on index page
     const isIndex = document.getElementById('hero-section') !== null;
