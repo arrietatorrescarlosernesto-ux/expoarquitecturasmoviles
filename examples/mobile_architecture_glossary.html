@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glosario de Arquitecturas Móviles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #1e293b;
+            --accent-color: #3b82f6;
+            --text-color: #e2e8f0;
+            --muted-text: #94a3b8;
+            --border-color: #334155;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--muted-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .term {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .term::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .definition {
+            color: var(--muted-text);
+            font-size: 0.95rem;
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--muted-text);
+            font-size: 0.9rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Elementos Clave de Arquitectura Móvil</h1>
+            <p class="subtitle">Compendio técnico de terminología fundamental para el diseño y desarrollo de aplicaciones modernas.</p>
+        </header>
+
+        <div class="grid">
+            <!-- UI & Presentation -->
+            <div class="card">
+                <span class="category-tag">Presentación</span>
+                <div class="term">UI (User Interface)</div>
+                <div class="definition">Punto de interacción entre el usuario y el sistema. En arquitectura, debe ser "tonta" (passive), limitándose a renderizar datos y capturar eventos sin procesar lógica de negocio.</div>
+            </div>
+
+            <div class="card">
+                <span class="category-tag">Presentación</span>
+                <div class="term">View State</div>
+                <div class="definition">Representación de datos inmutables que describen exactamente cómo debe verse la pantalla en un momento dado (ej: cargando, lista de usuarios, error).</div>
+            </div>
+
+            <!-- Logic & Control -->
+            <div class="card">
+                <span class="category-tag">Lógica</span>
+                <div class="term">Business Logic</div>
+                <div class="definition">Conjunto de reglas y algoritmos que definen el funcionamiento del núcleo de la aplicación, independiente de cómo se muestren los datos o dónde se guarden.</div>
+            </div>
+
+            <div class="card">
+                <span class="category-tag">Lógica</span>
+                <div class="term">ViewModel / Presenter</div>
+                <div class="definition">Intermediario que transforma los datos crudos del modelo en información lista para ser mostrada por la vista, gestionando el estado y la lógica de presentación.</div>
+            </div>
+
+            <!-- Data & State -->
+            <div class="card">
+                <span class="category-tag">Datos</span>
+                <div class="term">Repository Pattern</div>
+                <div class="definition">Patrón que abstrae el origen de los datos. La app pide datos al repositorio sin saber si vienen de una base de datos local (cache) o de una API remota (nube).</div>
+            </div>
+
+            <div class="card">
+                <span class="category-tag">Datos</span>
+                <div class="term">Single Source of Truth</div>
+                <div class="definition">Principio que establece que debe haber una única fuente confiable para cada dato en la app, evitando conflictos de sincronización entre diferentes pantallas.</div>
+            </div>
+
+            <!-- Flow & Patterns -->
+            <div class="card">
+                <span class="category-tag">Flujo</span>
+                <div class="term">Unidirectional Data Flow</div>
+                <div class="definition">Patrón donde los datos fluyen en una sola dirección (Estado -> Vista) y los eventos en otra (Vista -> Intención -> Estado), haciendo el sistema predecible y fácil de depurar.</div>
+            </div>
+
+            <div class="card">
+                <span class="category-tag">Flujo</span>
+                <div class="term">Dependency Injection</div>
+                <div class="definition">Técnica donde los objetos reciben sus dependencias desde fuera en lugar de crearlas ellos mismos, facilitando el testing y el desacoplamiento de componentes.</div>
+            </div>
+
+            <div class="card">
+                <span class="category-tag">Ciclo de Vida</span>
+                <div class="term">Lifecycle Awareness</div>
+                <div class="definition">Capacidad de los componentes de arquitectura para saber en qué estado está la pantalla (activa, pausada, destruida) y actuar en consecuencia para evitar fugas de memoria.</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Exposicion - Arquitecturas de Software Móvil</p>
+            <a href="javascript:window.close();" class="back-btn">Cerrar Glosario</a>
+        </footer>
+    </div>
+</body>
+</html>
