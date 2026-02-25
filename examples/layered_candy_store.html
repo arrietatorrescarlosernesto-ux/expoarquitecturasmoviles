@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Dulces - Layered Architecture</title>
+    <style>
+        /* Presentation Layer Styles */
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif; /* Fuente divertida */
+            background-color: #fdf6e3; /* Fondo crema suave */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            border: 5px solid #ff69b4; /* Borde rosa chicle */
+        }
+
+        h1 {
+            color: #ff69b4;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .candy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .candy-card {
+            background-color: #fff0f5; /* Lavanda suave */
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 3px solid #87ceeb; /* Azul cielo */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .candy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.4);
+        }
+
+        .candy-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .candy-name {
+            font-size: 1.5rem;
+            color: #ff8c00; /* Naranja */
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+
+        .candy-price {
+            color: #20b2aa; /* Verde mar */
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .candy-stock {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-buy {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #ff1493;
+        }
+
+        .btn-buy:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .cart-panel {
+            background-color: #e0ffff; /* Cian claro */
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 3px dashed #20b2aa;
+            margin-top: 2rem;
+        }
+
+        .total-display {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .layer-explanation {
+            margin-top: 3rem;
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+        
+        .layer-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: white;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+
+        .badge-ui { background-color: #ff69b4; }
+        .badge-business { background-color: #ff8c00; }
+        .badge-data { background-color: #20b2aa; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🍬 Dulcería Layered 🍪</h1>
+    <p class="description">¡Bienvenido a la tienda de dulces más organizada del mundo!</p>
+
+    <div id="candy-container" class="candy-grid">
+        <!-- Candy Cards will be injected here by Presentation Layer -->
+    </div>
+
+    <div class="cart-panel">
+        <div class="total-display">Total a Pagar: $<span id="total-amount">0.00</span></div>
+        <div id="message-area" style="margin-top: 10px; color: #ff69b4; font-weight: bold; min-height: 1.2em;"></div>
+    </div>
+
+    <div class="layer-explanation">
+        <h3>🎨 Arquitectura en Capas (Cómo funciona esto)</h3>
+        <p><span class="layer-badge badge-ui">Presentation Layer</span> Se encarga de mostrarte los botones coloridos y detectar tus clics. No sabe calcular precios.</p>
+        <p><span class="layer-badge badge-business">Business Layer</span> Es el "jefe". Decide si puedes comprar (¿hay stock?) y suma el total. No toca el HTML.</p>
+        <p><span class="layer-badge badge-data">Data Layer</span> Es el almacén. Guarda cuántas gomitas quedan en la "base de datos" simulada.</p>
+    </div>
+</div>
+
+<script>
+    /**
+     * LAYER 3: DATA ACCESS LAYER (Persistencia)
+     * Responsabilidad: Simular acceso a base de datos. Solo guarda y recupera datos crudos.
+     */
+    const DataLayer = {
+        // "Base de datos" simulada
+        _db: {
+            candies: [
+                { id: 1, name: "Gomitas Mágicas", price: 0.50, stock: 10, icon: "🧸" },
+                { id: 2, name: "Chocolate Supremo", price: 1.20, stock: 5, icon: "🍫" },
+                { id: 3, name: "Galletas Espaciales", price: 0.80, stock: 8, icon: "🍪" }
+            ]
+        },
+
+        getAllProducts: function() {
+            // Simula una query: SELECT * FROM candies
+            return JSON.parse(JSON.stringify(this._db.candies)); // Retorna copia para proteger DB
+        },
+
+        getProductById: function(id) {
+            return this._db.candies.find(c => c.id === id);
+        },
+
+        updateStock: function(id, newStock) {
+            const product = this._db.candies.find(c => c.id === id);
+            if (product) {
+                product.stock = newStock;
+                return true;
+            }
+            return false;
+        }
+    };
+
+    /**
+     * LAYER 2: BUSINESS LOGIC LAYER (Dominio)
+     * Responsabilidad: Reglas de negocio. Validaciones, cálculos.
+     * Conoce a: DataLayer.
+     */
+    const BusinessLayer = {
+        cartTotal: 0.00,
+
+        getProductsForDisplay: function() {
+            // Regla de negocio: Podríamos filtrar productos sin stock si quisiéramos, 
+            // o aplicar descuentos por temporada aquí.
+            return DataLayer.getAllProducts();
+        },
+
+        purchaseProduct: function(productId) {
+            const product = DataLayer.getProductById(productId);
+            
+            // Regla de Negocio 1: Validar existencia
+            if (!product) {
+                return { success: false, message: "Producto no encontrado." };
+            }
+
+            // Regla de Negocio 2: Validar stock
+            if (product.stock <= 0) {
+                return { success: false, message: "¡Oh no! Se acabaron las " + product.name };
+            }
+
+            // Regla de Negocio 3: Actualizar inventario
+            const newStock = product.stock - 1;
+            DataLayer.updateStock(productId, newStock);
+
+            // Regla de Negocio 4: Calcular total
+            this.cartTotal += product.price;
+
+            return { 
+                success: true, 
+                message: "¡Ñam! Compraste " + product.name,
+                newStock: newStock,
+                newTotal: this.cartTotal,
+                productName: product.name
+            };
+        }
+    };
+
+    /**
+     * LAYER 1: PRESENTATION LAYER (UI)
+     * Responsabilidad: Renderizar HTML, manejar eventos del usuario.
+     * Conoce a: BusinessLayer.
+     */
+    const PresentationLayer = {
+        init: function() {
+            this.renderProducts();
+        },
+
+        renderProducts: function() {
+            const container = document.getElementById('candy-container');
+            container.innerHTML = '';
+            
+            // Pide datos a la capa de negocio
+            const products = BusinessLayer.getProductsForDisplay();
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'candy-card';
+                card.innerHTML = `
+                    <div class="candy-icon">${product.icon}</div> <!-- Usando emojis como iconos visuales simples -->
+                    <div class="candy-name">${product.name}</div>
+                    <div class="candy-price">$${product.price.toFixed(2)}</div>
+                    <div class="candy-stock">Disponibles: <span id="stock-${product.id}">${product.stock}</span></div>
+                    <button class="btn-buy" onclick="PresentationLayer.handleBuy(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
+                        Comprar
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        },
+
+        handleBuy: function(id) {
+            // Delega la lógica a la capa de negocio
+            const result = BusinessLayer.purchaseProduct(id);
+
+            // Actualiza la UI basado en el resultado
+            const messageArea = document.getElementById('message-area');
+            messageArea.textContent = result.message;
+
+            if (result.success) {
+                // Actualizar stock visual
+                document.getElementById(`stock-${id}`).textContent = result.newStock;
+                // Actualizar total visual
+                document.getElementById('total-amount').textContent = result.newTotal.toFixed(2);
+                
+                // Si se acabó el stock, deshabilitar botón (UI Logic)
+                if (result.newStock === 0) {
+                    this.renderProducts(); // Re-renderizar para actualizar estado de botones
+                }
+            } else {
+                messageArea.style.color = 'red';
+                setTimeout(() => messageArea.style.color = '#ff69b4', 2000);
+            }
+        }
+    };
+
+    // Inicializar aplicación
+    document.addEventListener('DOMContentLoaded', () => {
+        PresentationLayer.init();
+    });
+
+</script>
+
+</body>
+</html>
