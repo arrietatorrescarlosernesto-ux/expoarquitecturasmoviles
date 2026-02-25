@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo MVC - Aranceles</title>
+    <title>Ejemplo MVC - Aranceles 2025</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -22,78 +22,196 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 600px;
+            max-width: 800px;
             text-align: center;
         }
         h1 {
             color: #00c6ff;
+            margin-bottom: 1rem;
+        }
+        .controls {
             margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        select {
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: #2d2d2d;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        select:hover {
+            border-color: #00c6ff;
+        }
+        select:focus {
+            outline: none;
+            border-color: #00c6ff;
+            box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.2);
         }
         .chart-wrapper {
             position: relative;
-            height: 300px;
+            height: 400px;
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+        .placeholder-text {
+            color: #555;
+            font-style: italic;
         }
         .info {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-size: 0.9rem;
             color: #aaa;
+            text-align: left;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Aranceles Globales (Ejemplo MVC)</h1>
-    <div class="chart-wrapper">
-        <canvas id="tariffChart"></canvas>
+    <h1>Aranceles Globales 2025 (MVC)</h1>
+    
+    <div class="controls">
+        <select id="countrySelect">
+            <option value="" disabled selected>-- Selecciona un País --</option>
+            <!-- Opciones generadas dinámicamente por la Vista -->
+        </select>
     </div>
-    <p class="info">Este gráfico se genera separando Datos (Modelo), Interfaz (Vista) y Lógica (Controlador).</p>
+
+    <div class="chart-wrapper">
+        <canvas id="tariffChart" style="display: none;"></canvas>
+        <div id="emptyState" class="placeholder-text">
+            Selecciona un país del menú para ver sus picos arancelarios de 2025.
+        </div>
+    </div>
+    
+    <div class="info">
+        <strong>Arquitectura MVC:</strong>
+        <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+            <li><strong>Modelo:</strong> Contiene los datos crudos de 30 países.</li>
+            <li><strong>Vista:</strong> Gestiona el menú desplegable y renderiza el gráfico.</li>
+            <li><strong>Controlador:</strong> Escucha tu selección y coordina la actualización.</li>
+        </ul>
+    </div>
 </div>
 
 <script>
     // ---------------------------------------------------------
     // 1. MODELO (Model)
-    // Responsabilidad: Gestionar los datos puros.
+    // Datos simulados de picos arancelarios para 2025 (por sector)
     // ---------------------------------------------------------
     const TariffModel = {
+        // Base de datos de 30 países con aranceles hipotéticos para 2025
         data: {
-            labels: ["China", "México", "Vietnam", "Unión Europea", "Canadá"],
-            values: [25.0, 5.0, 10.5, 8.0, 4.5] // Porcentajes de arancel promedio
+            "chn": { name: "China", peaks: { "Tecnología": 25, "Automotriz": 45, "Acero": 15, "Textil": 12, "Agri": 30 } },
+            "mex": { name: "México", peaks: { "Tecnología": 5, "Automotriz": 2.5, "Acero": 0, "Textil": 15, "Agri": 10 } },
+            "vnm": { name: "Vietnam", peaks: { "Tecnología": 8, "Automotriz": 35, "Acero": 12, "Textil": 18, "Agri": 22 } },
+            "eu":  { name: "Unión Europea", peaks: { "Tecnología": 4, "Automotriz": 10, "Acero": 25, "Textil": 8, "Agri": 14 } },
+            "can": { name: "Canadá", peaks: { "Tecnología": 2, "Automotriz": 6, "Acero": 0, "Textil": 5, "Agri": 250 } }, // Dairy is high!
+            "bra": { name: "Brasil", peaks: { "Tecnología": 35, "Automotriz": 35, "Acero": 12, "Textil": 35, "Agri": 10 } },
+            "ind": { name: "India", peaks: { "Tecnología": 22, "Automotriz": 100, "Acero": 15, "Textil": 25, "Agri": 40 } },
+            "jpn": { name: "Japón", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 5, "Textil": 10, "Agri": 778 } }, // Rice tariff is huge
+            "kor": { name: "Corea del Sur", peaks: { "Tecnología": 0, "Automotriz": 8, "Acero": 0, "Textil": 13, "Agri": 513 } },
+            "usa": { name: "Estados Unidos", peaks: { "Tecnología": 2, "Automotriz": 2.5, "Acero": 25, "Textil": 15, "Agri": 5 } },
+            "arg": { name: "Argentina", peaks: { "Tecnología": 35, "Automotriz": 35, "Acero": 20, "Textil": 35, "Agri": 15 } },
+            "col": { name: "Colombia", peaks: { "Tecnología": 5, "Automotriz": 35, "Acero": 10, "Textil": 15, "Agri": 20 } },
+            "chl": { name: "Chile", peaks: { "Tecnología": 6, "Automotriz": 6, "Acero": 6, "Textil": 6, "Agri": 6 } }, // Flat tariff mostly
+            "per": { name: "Perú", peaks: { "Tecnología": 0, "Automotriz": 6, "Acero": 0, "Textil": 11, "Agri": 0 } },
+            "rus": { name: "Rusia", peaks: { "Tecnología": 15, "Automotriz": 25, "Acero": 10, "Textil": 15, "Agri": 20 } },
+            "tur": { name: "Turquía", peaks: { "Tecnología": 10, "Automotriz": 50, "Acero": 30, "Textil": 40, "Agri": 45 } },
+            "idn": { name: "Indonesia", peaks: { "Tecnología": 10, "Automotriz": 50, "Acero": 15, "Textil": 25, "Agri": 20 } },
+            "tha": { name: "Tailandia", peaks: { "Tecnología": 5, "Automotriz": 80, "Acero": 10, "Textil": 30, "Agri": 40 } },
+            "mys": { name: "Malasia", peaks: { "Tecnología": 5, "Automotriz": 30, "Acero": 15, "Textil": 20, "Agri": 15 } },
+            "phl": { name: "Filipinas", peaks: { "Tecnología": 3, "Automotriz": 30, "Acero": 7, "Textil": 15, "Agri": 35 } },
+            "sgp": { name: "Singapur", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 0 } },
+            "aus": { name: "Australia", peaks: { "Tecnología": 0, "Automotriz": 5, "Acero": 5, "Textil": 5, "Agri": 0 } },
+            "nzl": { name: "Nueva Zelanda", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 0 } },
+            "zaf": { name: "Sudáfrica", peaks: { "Tecnología": 10, "Automotriz": 25, "Acero": 10, "Textil": 45, "Agri": 15 } },
+            "egy": { name: "Egipto", peaks: { "Tecnología": 15, "Automotriz": 135, "Acero": 20, "Textil": 30, "Agri": 25 } },
+            "sau": { name: "Arabia Saudita", peaks: { "Tecnología": 5, "Automotriz": 5, "Acero": 20, "Textil": 12, "Agri": 15 } },
+            "uk":  { name: "Reino Unido", peaks: { "Tecnología": 2, "Automotriz": 10, "Acero": 0, "Textil": 8, "Agri": 12 } },
+            "che": { name: "Suiza", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 150 } },
+            "nor": { name: "Noruega", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 200 } },
+            "isr": { name: "Israel", peaks: { "Tecnología": 0, "Automotriz": 7, "Acero": 0, "Textil": 6, "Agri": 50 } }
         },
         
-        // Método para obtener datos (simula una petición a base de datos)
-        getData: function() {
-            return this.data;
+        getAllCountries: function() {
+            // Retorna array de objetos {id, name} para llenar el select
+            return Object.keys(this.data).map(key => ({
+                id: key,
+                name: this.data[key].name
+            })).sort((a, b) => a.name.localeCompare(b.name));
+        },
+
+        getCountryData: function(id) {
+            return this.data[id] || null;
         }
     };
 
     // ---------------------------------------------------------
     // 2. VISTA (View)
-    // Responsabilidad: Mostrar los datos al usuario (UI).
+    // Gestiona el DOM: Llenar select, mostrar/ocultar gráfico
     // ---------------------------------------------------------
     const TariffView = {
-        render: function(data) {
-            const ctx = document.getElementById('tariffChart').getContext('2d');
+        selectElement: document.getElementById('countrySelect'),
+        canvas: document.getElementById('tariffChart'),
+        emptyState: document.getElementById('emptyState'),
+        chartInstance: null,
+
+        init: function() {
+            this.populateSelect();
+        },
+
+        populateSelect: function() {
+            const countries = TariffModel.getAllCountries();
+            countries.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.id;
+                option.textContent = c.name;
+                this.selectElement.appendChild(option);
+            });
+        },
+
+        renderChart: function(countryName, peaksData) {
+            // Mostrar canvas, ocultar texto vacío
+            this.canvas.style.display = 'block';
+            this.emptyState.style.display = 'none';
+
+            const ctx = this.canvas.getContext('2d');
             
-            // Si ya existe un gráfico, lo destruimos para evitar superposiciones (buena práctica)
-            if (window.myChart) {
-                window.myChart.destroy();
+            // Destruir gráfico anterior si existe
+            if (this.chartInstance) {
+                this.chartInstance.destroy();
             }
 
-            window.myChart = new Chart(ctx, {
+            const labels = Object.keys(peaksData);
+            const values = Object.values(peaksData);
+
+            this.chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: data.labels,
+                    labels: labels,
                     datasets: [{
-                        label: 'Tasa Arancelaria Promedio (%)',
-                        data: data.values,
+                        label: `Aranceles Máximos 2025: ${countryName} (%)`,
+                        data: values,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
-                            'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)'
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
@@ -111,16 +229,18 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#333' },
-                            ticks: { color: '#ccc' }
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#aaa' }
                         },
                         x: {
                             grid: { display: false },
-                            ticks: { color: '#ccc' }
+                            ticks: { color: '#aaa' }
                         }
                     },
                     plugins: {
-                        legend: { labels: { color: '#eee' } }
+                        legend: {
+                            labels: { color: '#e0e0e0' }
+                        }
                     }
                 }
             });
@@ -129,21 +249,30 @@
 
     // ---------------------------------------------------------
     // 3. CONTROLADOR (Controller)
-    // Responsabilidad: Intermediario. Pide datos al Modelo y se los da a la Vista.
+    // Escucha eventos y coordina Modelo y Vista
     // ---------------------------------------------------------
     const AppController = {
         init: function() {
-            console.log("Iniciando aplicación MVC...");
+            TariffView.init();
             
-            // 1. Obtener datos del Modelo
-            const data = TariffModel.getData();
-            
-            // 2. Pasarlos a la Vista para renderizar
-            TariffView.render(data);
+            // Event Listener: Cuando el usuario cambia el país
+            document.getElementById('countrySelect').addEventListener('change', (e) => {
+                const selectedId = e.target.value;
+                if (selectedId) {
+                    this.handleCountrySelection(selectedId);
+                }
+            });
+        },
+
+        handleCountrySelection: function(countryId) {
+            const countryData = TariffModel.getCountryData(countryId);
+            if (countryData) {
+                TariffView.renderChart(countryData.name, countryData.peaks);
+            }
         }
     };
 
-    // Inicializar la aplicación
+    // Iniciar la aplicación
     AppController.init();
 
 </script>
