@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo MVP - Aranceles 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            border-top: 4px solid #9d50bb; /* Color distintivo para MVP (Púrpura) */
+        }
+        h1 {
+            color: #9d50bb;
+            margin-bottom: 1rem;
+        }
+        .controls {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        select {
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background-color: #2d2d2d;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        select:hover {
+            border-color: #9d50bb;
+        }
+        select:focus {
+            outline: none;
+            border-color: #9d50bb;
+            box-shadow: 0 0 0 2px rgba(157, 80, 187, 0.2);
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
+        .placeholder-text {
+            color: #555;
+            font-style: italic;
+        }
+        .info {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #aaa;
+            text-align: left;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+        }
+        .badge {
+            background-color: #9d50bb;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Aranceles Globales 2025 (MVP)</h1>
+    
+    <div class="controls">
+        <select id="countrySelect">
+            <option value="" disabled selected>-- Selecciona un País --</option>
+            <!-- Opciones inyectadas por el Presentador a la Vista -->
+        </select>
+    </div>
+
+    <div class="chart-wrapper">
+        <canvas id="tariffChart" style="display: none;"></canvas>
+        <div id="emptyState" class="placeholder-text">
+            Selecciona un país para que el Presentador actualice la Vista.
+        </div>
+    </div>
+    
+    <div class="info">
+        <strong>Arquitectura MVP (Passive View):</strong>
+        <ul style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+            <li><span class="badge">Vista</span> <strong>Pasiva:</strong> No conoce al Modelo. Solo expone métodos <code>setCountries()</code> y <code>showChart()</code>.</li>
+            <li><span class="badge">Presentador</span> <strong>Inteligente:</strong> Obtiene datos del Modelo, los formatea y le dice a la Vista <em>exactamente</em> qué pintar.</li>
+            <li><span class="badge">Modelo</span> <strong>Datos:</strong> Base de datos pura sin lógica de UI.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // 1. MODELO (Model)
+    // Igual que en MVC: Datos puros.
+    // ---------------------------------------------------------
+    const TariffModel = {
+        data: {
+            "chn": { name: "China", peaks: { "Tecnología": 25, "Automotriz": 45, "Acero": 15, "Textil": 12, "Agri": 30 } },
+            "mex": { name: "México", peaks: { "Tecnología": 5, "Automotriz": 2.5, "Acero": 0, "Textil": 15, "Agri": 10 } },
+            "vnm": { name: "Vietnam", peaks: { "Tecnología": 8, "Automotriz": 35, "Acero": 12, "Textil": 18, "Agri": 22 } },
+            "eu":  { name: "Unión Europea", peaks: { "Tecnología": 4, "Automotriz": 10, "Acero": 25, "Textil": 8, "Agri": 14 } },
+            "can": { name: "Canadá", peaks: { "Tecnología": 2, "Automotriz": 6, "Acero": 0, "Textil": 5, "Agri": 250 } },
+            "bra": { name: "Brasil", peaks: { "Tecnología": 35, "Automotriz": 35, "Acero": 12, "Textil": 35, "Agri": 10 } },
+            "ind": { name: "India", peaks: { "Tecnología": 22, "Automotriz": 100, "Acero": 15, "Textil": 25, "Agri": 40 } },
+            "jpn": { name: "Japón", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 5, "Textil": 10, "Agri": 778 } },
+            "kor": { name: "Corea del Sur", peaks: { "Tecnología": 0, "Automotriz": 8, "Acero": 0, "Textil": 13, "Agri": 513 } },
+            "usa": { name: "Estados Unidos", peaks: { "Tecnología": 2, "Automotriz": 2.5, "Acero": 25, "Textil": 15, "Agri": 5 } },
+            "arg": { name: "Argentina", peaks: { "Tecnología": 35, "Automotriz": 35, "Acero": 20, "Textil": 35, "Agri": 15 } },
+            "col": { name: "Colombia", peaks: { "Tecnología": 5, "Automotriz": 35, "Acero": 10, "Textil": 15, "Agri": 20 } },
+            "chl": { name: "Chile", peaks: { "Tecnología": 6, "Automotriz": 6, "Acero": 6, "Textil": 6, "Agri": 6 } },
+            "per": { name: "Perú", peaks: { "Tecnología": 0, "Automotriz": 6, "Acero": 0, "Textil": 11, "Agri": 0 } },
+            "rus": { name: "Rusia", peaks: { "Tecnología": 15, "Automotriz": 25, "Acero": 10, "Textil": 15, "Agri": 20 } },
+            "tur": { name: "Turquía", peaks: { "Tecnología": 10, "Automotriz": 50, "Acero": 30, "Textil": 40, "Agri": 45 } },
+            "idn": { name: "Indonesia", peaks: { "Tecnología": 10, "Automotriz": 50, "Acero": 15, "Textil": 25, "Agri": 20 } },
+            "tha": { name: "Tailandia", peaks: { "Tecnología": 5, "Automotriz": 80, "Acero": 10, "Textil": 30, "Agri": 40 } },
+            "mys": { name: "Malasia", peaks: { "Tecnología": 5, "Automotriz": 30, "Acero": 15, "Textil": 20, "Agri": 15 } },
+            "phl": { name: "Filipinas", peaks: { "Tecnología": 3, "Automotriz": 30, "Acero": 7, "Textil": 15, "Agri": 35 } },
+            "sgp": { name: "Singapur", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 0 } },
+            "aus": { name: "Australia", peaks: { "Tecnología": 0, "Automotriz": 5, "Acero": 5, "Textil": 5, "Agri": 0 } },
+            "nzl": { name: "Nueva Zelanda", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 0 } },
+            "zaf": { name: "Sudáfrica", peaks: { "Tecnología": 10, "Automotriz": 25, "Acero": 10, "Textil": 45, "Agri": 15 } },
+            "egy": { name: "Egipto", peaks: { "Tecnología": 15, "Automotriz": 135, "Acero": 20, "Textil": 30, "Agri": 25 } },
+            "sau": { name: "Arabia Saudita", peaks: { "Tecnología": 5, "Automotriz": 5, "Acero": 20, "Textil": 12, "Agri": 15 } },
+            "uk":  { name: "Reino Unido", peaks: { "Tecnología": 2, "Automotriz": 10, "Acero": 0, "Textil": 8, "Agri": 12 } },
+            "che": { name: "Suiza", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 150 } },
+            "nor": { name: "Noruega", peaks: { "Tecnología": 0, "Automotriz": 0, "Acero": 0, "Textil": 0, "Agri": 200 } },
+            "isr": { name: "Israel", peaks: { "Tecnología": 0, "Automotriz": 7, "Acero": 0, "Textil": 6, "Agri": 50 } }
+        },
+        
+        getAllCountries: function() {
+            return Object.keys(this.data).map(key => ({
+                id: key,
+                name: this.data[key].name
+            })).sort((a, b) => a.name.localeCompare(b.name));
+        },
+
+        getCountryData: function(id) {
+            return this.data[id] || null;
+        }
+    };
+
+    // ---------------------------------------------------------
+    // 2. VISTA (View - Interface Implementation)
+    // Es "tonta" (Passive). No llama al Modelo. Solo tiene métodos
+    // para pintar lo que le mandan.
+    // ---------------------------------------------------------
+    const TariffView = {
+        selectElement: document.getElementById('countrySelect'),
+        canvas: document.getElementById('tariffChart'),
+        emptyState: document.getElementById('emptyState'),
+        chartInstance: null,
+
+        // Método de Interfaz: Recibe lista de paises y rellena el select
+        setCountries: function(countriesList) {
+            countriesList.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.id;
+                option.textContent = c.name;
+                this.selectElement.appendChild(option);
+            });
+        },
+
+        // Método de Interfaz: Bindea el evento al Presentador
+        bindSelectChange: function(handler) {
+            this.selectElement.addEventListener('change', (e) => {
+                const selectedId = e.target.value;
+                handler(selectedId);
+            });
+        },
+
+        // Método de Interfaz: Muestra el gráfico con datos YA procesados
+        showChart: function(title, labels, values) {
+            this.canvas.style.display = 'block';
+            this.emptyState.style.display = 'none';
+
+            const ctx = this.canvas.getContext('2d');
+            
+            if (this.chartInstance) {
+                this.chartInstance.destroy();
+            }
+
+            this.chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: values,
+                        backgroundColor: 'rgba(157, 80, 187, 0.7)', // Color MVP
+                        borderColor: 'rgba(157, 80, 187, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#aaa' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#aaa' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#e0e0e0' } }
+                    }
+                }
+            });
+        }
+    };
+
+    // ---------------------------------------------------------
+    // 3. PRESENTADOR (Presenter)
+    // El cerebro. Tiene la referencia a View y Model.
+    // ---------------------------------------------------------
+    const TariffPresenter = {
+        init: function() {
+            // 1. Pedir datos al Modelo
+            const countries = TariffModel.getAllCountries();
+            
+            // 2. Actualizar la Vista con esos datos
+            TariffView.setCountries(countries);
+
+            // 3. Escuchar eventos de la Vista
+            TariffView.bindSelectChange(this.onCountrySelected.bind(this));
+        },
+
+        onCountrySelected: function(countryId) {
+            if (!countryId) return;
+
+            // 1. Pedir detalle al Modelo
+            const countryData = TariffModel.getCountryData(countryId);
+
+            if (countryData) {
+                // 2. Formatear datos para la Vista (Lógica de Presentación)
+                const title = `Aranceles Máximos 2025: ${countryData.name}`;
+                const labels = Object.keys(countryData.peaks);
+                const values = Object.values(countryData.peaks);
+
+                // 3. Ordenar a la Vista que muestre el gráfico
+                TariffView.showChart(title, labels, values);
+            }
+        }
+    };
+
+    // Iniciar
+    TariffPresenter.init();
+
+</script>
+
+</body>
+</html>
