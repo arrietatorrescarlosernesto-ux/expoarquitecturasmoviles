@@ -37,7 +37,7 @@ include __DIR__ . '/db.php';
                 $current_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                 $is_home = basename($_SERVER['PHP_SELF']) == 'index.php';
 
-                echo '<li><a href="index.php" class="' . ($is_home ? 'active' : '') . '">🏠 Inicio</a></li>';
+                echo '<li><a href="index.php" class="' . ($is_home ? 'active' : '') . '">Inicio</a></li>';
                 
                 if ($result && $result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {

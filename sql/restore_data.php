@@ -68,11 +68,11 @@ $contenido_1_2 = '
 <p>Los objetivos de una arquitectura móvil se centran en optimizar el desarrollo y el ciclo de vida de la aplicación:</p>
 <div class="objectives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #00c6ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🧩 Organización del Código</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Organización del Código</h4>
         <p style="font-size: 0.9rem; color: #aaa;">Facilita una estructura modular y clara, reduciendo la complejidad.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #0072ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🛠️ Mantenimiento</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">️ Mantenimiento</h4>
         <p style="font-size: 0.9rem; color: #aaa;">Código más limpio, fácil de actualizar y corregir.</p>
     </div>
 </div>';
@@ -82,15 +82,15 @@ insertarSubtema($conn, 1, '1.2 Objetivos de una arquitectura móvil', $contenido
 $contenido_2_5 = '
     <p>A continuación se presenta un análisis detallado de costos y evaluación de la arquitectura MVC en aplicaciones móviles, integrando comparaciones con otros modelos y especificando cuándo representa una ventaja o desventaja.</p>
 
-    <h4 style="color: var(--accent-purple); margin-top: 2rem; margin-bottom: 1rem;">📊 Análisis de Costos y Evaluación</h4>
+    <h4 style="color: var(--accent-purple); margin-top: 2rem; margin-bottom: 1rem;"> Análisis de Costos y Evaluación</h4>
 
     <div class="table-responsive" style="overflow-x: auto; margin-bottom: 2rem; border-radius: 8px; border: 1px solid #333;">
         <table style="width: 100%; border-collapse: collapse; min-width: 700px; font-size: 0.95rem;">
             <thead>
                 <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                     <th style="padding: 15px; text-align: left; width: 25%;">Aspecto</th>
-                    <th style="padding: 15px; text-align: left; width: 37.5%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Cuándo es Ventaja (y por qué)</th>
-                    <th style="padding: 15px; text-align: left; width: 37.5%;">❌ Cuándo es Desventaja (y por qué)</th>
+                    <th style="padding: 15px; text-align: left; width: 37.5%; border-right: 1px solid rgba(255,255,255,0.2);"> Cuándo es Ventaja (y por qué)</th>
+                    <th style="padding: 15px; text-align: left; width: 37.5%;"> Cuándo es Desventaja (y por qué)</th>
                 </tr>
             </thead>
             <tbody>

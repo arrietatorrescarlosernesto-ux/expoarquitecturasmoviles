@@ -262,8 +262,8 @@ function calculateResults(questions) {
         resultItem.style.borderRadius = "4px";
 
         let statusHtml = isCorrect 
-            ? `<span style="color: #4ade80; font-weight: bold;">✅ Correcto</span>` 
-            : `<span style="color: #f87171; font-weight: bold;">❌ Incorrecto (Tu respuesta: ${userVal || "Ninguna"})</span>`;
+            ? `<span style="color: #4ade80; font-weight: bold;">Correcto</span>` 
+            : `<span style="color: #f87171; font-weight: bold;">Incorrecto (Tu respuesta: ${userVal || "Ninguna"})</span>`;
         
         let correctAnswerHtml = !isCorrect 
             ? `<p style="color: #ccc; margin-top: 0.5rem;">La respuesta correcta era: <strong>${q.correct_option}</strong></p>` 
@@ -274,7 +274,7 @@ function calculateResults(questions) {
             ${statusHtml}
             ${correctAnswerHtml}
             <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #333;">
-                <p style="color: #aaa; font-style: italic; font-size: 0.9rem;">💡 <strong>Tip de Aprendizaje:</strong> ${randomTip}</p>
+                <p style="color: #aaa; font-style: italic; font-size: 0.9rem;"><strong>Tip de Aprendizaje:</strong> ${randomTip}</p>
             </div>
         `;
         resultsDiv.appendChild(resultItem);

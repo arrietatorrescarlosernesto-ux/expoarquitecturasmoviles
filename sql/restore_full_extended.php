@@ -69,19 +69,19 @@ $content_1_2 = '
 <p>Los objetivos de una arquitectura móvil van más allá de la simple organización; buscan garantizar la longevidad y calidad del producto a través de principios sólidos de ingeniería de software:</p>
 <div class="objectives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #00c6ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🧩 Organización y Modularidad</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Organización y Modularidad</h4>
         <p style="font-size: 0.9rem; color: #aaa;">Descomponer el sistema en módulos independientes permite que múltiples desarrolladores trabajen en paralelo sin bloquearse mutuamente. Facilita la reutilización de código en diferentes partes de la app y reduce la duplicación.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #0072ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🛠️ Mantenibilidad y Testabilidad</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">️ Mantenibilidad y Testabilidad</h4>
         <p style="font-size: 0.9rem; color: #aaa;">El código debe ser fácil de leer y probar. Una buena arquitectura permite escribir tests unitarios automatizados que garantizan que los cambios no rompan funcionalidades existentes, reduciendo drásticamente la necesidad de QA manual repetitivo.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #9d50bb;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">📈 Escalabilidad</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Escalabilidad</h4>
         <p style="font-size: 0.9rem; color: #aaa;">La capacidad de agregar nuevas características (features) de forma constante sin que la complejidad del código crezca exponencialmente. Permite a la app crecer de 10 a 100 pantallas de manera ordenada y predecible.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #6e48aa;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🎭 Separación de Responsabilidades (SoC)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Separación de Responsabilidades (SoC)</h4>
         <p style="font-size: 0.9rem; color: #aaa;">Cada componente debe tener una única razón para cambiar. La UI no debe saber de base de datos, y la lógica no debe saber de píxeles. Esto desacopla las dependencias y hace el sistema más robusto ante cambios.</p>
     </div>
 </div>';
@@ -110,15 +110,15 @@ $content_2_2 = '
 <p>Los componentes de MVC se dividen en tres roles interconectados, cada uno con responsabilidades específicas para mantener la separación de preocupaciones en aplicaciones móviles. A continuación, se explica el rol de cada uno, con ejemplos en contextos como Android o iOS.</p>
 <div class="objectives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #00c6ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">📦 Modelo (Model)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Modelo (Model)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Gestiona los datos y la lógica de negocio de la aplicación, representando entidades del mundo real (como usuarios o productos). Es responsable de almacenar, recuperar y manipular datos (desde bases de datos, APIs o redes), aplicar reglas de negocio, validar datos y mantener la integridad sin conocimiento de la UI. En apps móviles, el Model se actualiza independientemente, permitiendo pruebas unitarias fáciles y reutilización en diferentes vistas. Por ejemplo, en una app de e-commerce, el Model maneja el inventario y cálculos de precios, notificando al Controller de cambios.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #9d50bb;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">👁️ Vista (View)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">️ Vista (View)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Se encarga de la interfaz de usuario, presentando los datos del Model de manera visual y manejando interacciones del usuario (como botones, listas o formularios). Es pasiva, enfocándose en la renderización y no en la lógica de datos; en móviles, incluye elementos como XML layouts en Android o Storyboards en iOS. La View observa cambios en el Model (vía Controller) para actualizarse automáticamente. Ejemplo: en una app de clima, la View muestra temperaturas y gráficos sin procesar los datos crudos.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #6e48aa;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🎮 Controlador (Controller)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Controlador (Controller)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Actúa como intermediario entre Model y View, procesando entradas del usuario (eventos como clics), actualizando el Model según sea necesario y refrescando la View con los datos actualizados. Contiene la lógica de aplicación principal, enrutando comandos y manejando el flujo. En móviles, como en Android Activities o iOS Controllers, puede volverse "masivo" en apps complejas si no se gestiona bien. Ejemplo: en una app de login, el Controller valida credenciales del Model y navega a la siguiente View.</p>
     </div>
 </div>
@@ -236,8 +236,8 @@ $content_2_5 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -297,15 +297,15 @@ $content_3_2 = '
 
 <div class="objectives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #00c6ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">📦 Modelo (Model)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Modelo (Model)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Responsable de la gestión de datos y lógica de dominio, incluyendo persistencia (ej. Room, Core Data), llamadas a APIs (Retrofit, Alamofire), validaciones de negocio y manejo de estados offline/online. No contiene lógica de presentación ni referencias a UI. Soporta patrones como Repository para múltiples fuentes de datos, asegurando idempotencia en operaciones asíncronas.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #9d50bb;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">👁️ Vista (View)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">️ Vista (View)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Pasiva y enfocada en UI; renderiza elementos (RecyclerView, UITableView), captura eventos de usuario y los delega al Presentador sin procesamiento. No accede al Modelo ni contiene lógica condicional; solo implementa interfaces para recibir actualizaciones. Esto reduce complejidad en la Vista, facilitando adaptaciones a diferentes dispositivos.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #6e48aa;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🎤 Presentador (Presenter)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Presentador (Presenter)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Centraliza la lógica de presentación (formateo de datos, validaciones UI, manejo de errores) y actúa como único puente; recibe eventos de Vista, consulta/actualiza Modelo y envía datos procesados a Vista. Independiente de UI para testabilidad; usa DI para inyección. En profundidad, maneja estados con máquinas de estado finitas para flujos complejos.</p>
     </div>
 </div>';
@@ -351,8 +351,8 @@ $content_3_5 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -405,18 +405,18 @@ $content_4_2 = '
 </div>
 <div class="objectives-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #00c6ff;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🔹 Model (Modelo)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> Model (Modelo)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Capa de datos y lógica de negocio. Contiene el acceso a bases de datos (Room/CoreData), servicios de red (Retrofit/Alamofire) y repositorios. Es completamente ignorante de la UI y del ViewModel. Su responsabilidad es proveer datos correctos.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #9d50bb;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🔹 ViewModel (Modelo de Vista)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> ViewModel (Modelo de Vista)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Es el intermediario inteligente y el gestor del estado de la UI. Prepara y transforma los datos del Modelo para que sean consumibles por la Vista.
         <br>1. <strong>Sobrevive a la configuración:</strong> No se destruye al rotar la pantalla.
         <br>2. <strong>No conoce a la Vista:</strong> No tiene referencias a `Activity` o `View` (evita Memory Leaks).
         <br>3. <strong>Expone Observables:</strong> Ofrece flujos de datos (LiveData, StateFlow) que la vista puede observar.</p>
     </div>
     <div class="objective-card" style="background: #1a1a1a; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #6e48aa;">
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">🔹 View (Vista)</h4>
+        <h4 style="color: #fff; margin-bottom: 0.5rem;"> View (Vista)</h4>
         <p style="font-size: 0.9rem; color: #ccc;">Totalmente reactiva. Su única responsabilidad es definir la estructura visual y suscribirse a los eventos del ViewModel. En Android puede ser XML con Data Binding o código Jetpack Compose; en iOS es SwiftUI. Cuando el dato cambia, la vista se redibuja sola.</p>
     </div>
 </div>';
@@ -454,8 +454,8 @@ $content_4_5 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -512,7 +512,7 @@ insertSubtopic($conn, 5, '5.2 Componentes de MVI', $content_5_2);
 
 $content_5_3 = '
 <div class="flow-steps" style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
-    <h4 style="color: var(--accent-purple); margin-bottom: 1rem;">🔄 Ciclo Unidireccional (UDF)</h4>
+    <h4 style="color: var(--accent-purple); margin-bottom: 1rem;"> Ciclo Unidireccional (UDF)</h4>
     <p style="margin-bottom: 1rem;">El dato viaja en una sola dirección en un ciclo cerrado, eliminando efectos secundarios inesperados y condiciones de carrera:</p>
     <ol style="margin-left: 1.5rem; color: #e0e0e0;">
         <li style="margin-bottom: 1rem;"><strong>User Event:</strong> El usuario interactúa (hace clic en un botón).</li>
@@ -537,8 +537,8 @@ $content_5_5 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -656,8 +656,8 @@ $content_6_5 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -741,8 +741,8 @@ $content_7_4 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px; text-align: left; width: 20%;">Aspecto</th>
-                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);">✅ Ventaja (Por qué y Cuándo)</th>
-                <th style="padding: 15px; text-align: left; width: 40%;">❌ Desventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%; border-right: 1px solid rgba(255,255,255,0.2);"> Ventaja (Por qué y Cuándo)</th>
+                <th style="padding: 15px; text-align: left; width: 40%;"> Desventaja (Por qué y Cuándo)</th>
             </tr>
         </thead>
         <tbody>
@@ -934,19 +934,19 @@ $content_8_4 = '
 <ul style="list-style: none; padding: 0;">
     <li style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
         <strong style="color: var(--accent-purple);">¿El equipo es Junior o tiene poca experiencia móvil?</strong>
-        <br><span style="color: #aaa;">👉 Evita Clean Architecture y MVI. Empieza con MVVM estándar usando las guías oficiales de Google/Apple.</span>
+        <br><span style="color: #aaa;"> Evita Clean Architecture y MVI. Empieza con MVVM estándar usando las guías oficiales de Google/Apple.</span>
     </li>
     <li style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
         <strong style="color: var(--accent-purple);">¿La App tiene flujos de UI muy complejos (wizards, validaciones múltiples)?</strong>
-        <br><span style="color: #aaa;">👉 MVI es tu mejor amigo. La máquina de estados simplifica drásticamente la gestión de lógica visual compleja.</span>
+        <br><span style="color: #aaa;"> MVI es tu mejor amigo. La máquina de estados simplifica drásticamente la gestión de lógica visual compleja.</span>
     </li>
     <li style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
         <strong style="color: var(--accent-purple);">¿Es un proyecto a largo plazo (+3 años) con múltiples equipos?</strong>
-        <br><span style="color: #aaa;">👉 Clean Architecture es obligatoria. Necesitas modularización para evitar que los equipos se pisen el código.</span>
+        <br><span style="color: #aaa;"> Clean Architecture es obligatoria. Necesitas modularización para evitar que los equipos se pisen el código.</span>
     </li>
     <li style="margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
         <strong style="color: var(--accent-purple);">¿Necesitas compartir lógica con Web o Backend?</strong>
-        <br><span style="color: #aaa;">👉 Considera Kotlin Multiplatform (KMP) con Clean Architecture. La capa de Dominio puede ser compartida al 100%.</span>
+        <br><span style="color: #aaa;"> Considera Kotlin Multiplatform (KMP) con Clean Architecture. La capa de Dominio puede ser compartida al 100%.</span>
     </li>
 </ul>';
 insertSubtopic($conn, 8, '8.4 Matriz de Decisión', $content_8_4);
@@ -969,8 +969,8 @@ $content_8_6 = '
         <thead>
             <tr style="background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); color: white;">
                 <th style="padding: 15px;">Arquitectura</th>
-                <th style="padding: 15px;">🏆 Mejor Uso</th>
-                <th style="padding: 15px;">🚫 Peor Uso</th>
+                <th style="padding: 15px;"> Mejor Uso</th>
+                <th style="padding: 15px;"> Peor Uso</th>
                 <th style="padding: 15px;">Palabra Clave</th>
             </tr>
         </thead>
@@ -1019,7 +1019,7 @@ insertTopic($conn, 9, 'Evaluación de Conocimientos', 'Cuestionario interactivo 
 $content_9_1 = '
 <div id="quiz-container" style="max-width: 800px; margin: 0 auto;">
     <div class="quiz-header" style="text-align: center; margin-bottom: 2rem;">
-        <h3 style="color: var(--accent-blue);">🧠 Desafío de Arquitectura</h3>
+        <h3 style="color: var(--accent-blue);"> Desafío de Arquitectura</h3>
         <p>Selecciona las respuestas correctas y envía el formulario al final.</p>
     </div>
     <div id="loading-quiz" style="text-align: center; padding: 2rem;">
@@ -1161,8 +1161,8 @@ $content_9_1 = '
             resultItem.style.borderRadius = "4px";
 
             let statusHtml = isCorrect 
-                ? `<span style="color: #4ade80; font-weight: bold;">✅ Correcto</span>` 
-                : `<span style="color: #f87171; font-weight: bold;">❌ Incorrecto (Tu respuesta: ${userVal || "Ninguna"})</span>`;
+                ? `<span style="color: #4ade80; font-weight: bold;"> Correcto</span>` 
+                : `<span style="color: #f87171; font-weight: bold;"> Incorrecto (Tu respuesta: ${userVal || "Ninguna"})</span>`;
             
             let correctAnswerHtml = !isCorrect 
                 ? `<p style="color: #ccc; margin-top: 0.5rem;">La respuesta correcta era: <strong>${q.correct_option}</strong></p>` 
@@ -1173,7 +1173,7 @@ $content_9_1 = '
                 ${statusHtml}
                 ${correctAnswerHtml}
                 <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #333;">
-                    <p style="color: #aaa; font-style: italic; font-size: 0.9rem;">💡 <strong>Tip de Aprendizaje:</strong> ${randomTip}</p>
+                    <p style="color: #aaa; font-style: italic; font-size: 0.9rem;"> <strong>Tip de Aprendizaje:</strong> ${randomTip}</p>
                 </div>
             `;
             resultsDiv.appendChild(resultItem);

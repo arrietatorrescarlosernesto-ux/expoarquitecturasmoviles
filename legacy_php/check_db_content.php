@@ -15,7 +15,7 @@ if ($result && $result->num_rows > 0) {
         
         // Buscar etiquetas de imagen en el contenido
         if (strpos($row['contenido'], '<img') !== false) {
-            echo "<p style='color:green; font-weight:bold;'>✅ Se encontraron imágenes en este contenido.</p>";
+            echo "<p style='color:green; font-weight:bold;'> Se encontraron imágenes en este contenido.</p>";
             
             // Extraer y mostrar las rutas de las imágenes encontradas
             preg_match_all('/<img[^>]+src="([^">]+)"/', $row['contenido'], $matches);
@@ -27,7 +27,7 @@ if ($result && $result->num_rows > 0) {
                 echo "</ul>";
             }
         } else {
-            echo "<p style='color:red; font-weight:bold;'>❌ NO se encontraron imágenes en este contenido.</p>";
+            echo "<p style='color:red; font-weight:bold;'> NO se encontraron imágenes en este contenido.</p>";
             echo "<p><em>Esto indica que el script SQL de actualización no se ha ejecutado correctamente.</em></p>";
         }
         
